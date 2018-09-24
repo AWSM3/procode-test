@@ -19,4 +19,11 @@ interface ConverterInterface
      * @return ConvertedFile
      */
     public function convert(string $filename): ConvertedFile;
+
+    /**
+     * @param string $filename
+     *
+     * @return mixed
+     */
+    public function validateFile(string $filename);
 }

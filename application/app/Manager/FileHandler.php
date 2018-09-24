@@ -73,6 +73,10 @@ class FileHandler
      */
     public function convertFile(UploadedFile $uploadedFile): void
     {
+        if (!$this->converter->validateFile($uploadedFile->file)) {
+            throw new \RuntimeException('Invalid file type');
+        }
+
         $file = $this->storage->moveUploadedFile($uploadedFile);
         try {
             /** @var File $fileEntity */

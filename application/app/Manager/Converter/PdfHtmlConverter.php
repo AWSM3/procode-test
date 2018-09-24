@@ -16,6 +16,9 @@ use Gufy\PdfToHtml\Pdf;
  */
 class PdfHtmlConverter implements ConverterInterface
 {
+    const
+        VALID_TYPE = 'application/pdf';
+
     /**
      * @param string $filename
      *
@@ -31,5 +34,15 @@ class PdfHtmlConverter implements ConverterInterface
         }
 
         return new ConvertedFile($pages);
+    }
+
+    /**
+     * @param string $filename
+     *
+     * @return mixed
+     */
+    public function validateFile(string $filename): bool
+    {
+        return mime_content_type($filename) === self::VALID_TYPE;
     }
 }
