@@ -25,6 +25,8 @@ class PdfHtmlConverterFactory implements InvokableFactoryInterface
      */
     public function __invoke(ContainerInterface $container)
     {
+        \Gufy\PdfToHtml\Config::set('pdftohtml.output', '/tmp/htmltopdf');
+
         return new PdfHtmlConverter;
     }
 }
