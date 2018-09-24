@@ -11,6 +11,7 @@ namespace App\Manager;
 use App\Core\Database\AdapterInterface;
 use App\Core\Storage\StorageInterface;
 use App\Core\Storage\StoredFile;
+use App\Entity\File;
 use App\Entity\Mappers\FileMapper;
 use App\Entity\Mappers\FilePageMapper;
 use App\Manager\Converter\ConvertedFile;
@@ -73,6 +74,17 @@ class FileHandler
     public function convertFile(UploadedFile $uploadedFile): void
     {
         $file = $this->storage->moveUploadedFile($uploadedFile);
+        try {
+            /** @var File $fileEntity */
+            $fileEntity = $this->fileRepository->get($file->getHash(), 'hash');
+
+            $e = new Exception\FileAlreadyProcessedException;
+            $e->setFileEntity($fileEntity);
+            throw $e;
+        } catch (Exception\FileAlreadyProcessedException $e) {
+            throw $e;
+        } catch (\Exception $e) {}
+
         /** @todo Конвертацию можно бросать в очередь, тот же beanstalkd */
         $converted = $this->converter->convert($file->getLocal());
 
