@@ -1,0 +1,27 @@
+{% extends "layout/app.html" %}
+
+{% block title %}Entry{% endblock %}
+
+{% block content %}
+
+{% set pages = model.getPages().toArray() %}
+
+<a href="{{ model.getFile().getStoredFile().getPublic() }}" target="_blank" class="btn btn-dark">Source</a>
+<hr>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    {% for page in pages %}
+        <li class="nav-item">
+            <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab" href="#tab-{{ loop.index }}" role="tab">Page #{{ ++loop.index }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<div class="tab-content" id="myTabContent">
+    {% for page in pages %}
+        <div class="tab-pane fade show {% if loop.first %}active{% endif %}" id="tab-{{ loop.index }}" role="tabpanel">
+            {{ page.content|raw }}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

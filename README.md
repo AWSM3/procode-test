@@ -19,9 +19,9 @@
 - DI (Service Provider)
 - Repository
 - PDO(MySQL)
-- Database migrations.
+- Database migrations
 - Twig template engine
 
 ## Требования
 1. Poppler-Utils (`apt-get install poppler-utils`)
-2. PHP конфигурация предполагающий доступ скриптов к шеллу
+2. PHP конфигурация предполагающий доступ скриптов к шеллу 

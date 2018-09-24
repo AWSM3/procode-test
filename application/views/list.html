@@ -1,0 +1,35 @@
+{% extends "layout/app.html" %}
+
+{% block title %}List of files{% endblock %}
+
+{% block content %}
+
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Hash</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.hash }}</td>
+                <td>
+                    <a href="{{ path_for('entry', {'id': item.id}) }}">Open</a>
+                    <a href="{{ item.getStoredFile().getPublic() }}" target="_blank">Download source</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-12">
+    {{ paginator.renderPages()|raw }}
+</div>
+
+{% endblock %}

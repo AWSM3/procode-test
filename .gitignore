@@ -1,0 +1,8 @@
+
+\.idea/
+
+data/mysql/
+
+application/cache/views/
+
+application/public/files/
