@@ -10,6 +10,7 @@ namespace App\Http\Action;
 /** @uses */
 use App\Core\Http\ActionInterface;
 use App\Core\Routing\RouterInterface;
+use App\Manager\Exception\FileAlreadyProcessedException;
 use App\Manager\FileHandler;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
@@ -49,8 +50,14 @@ class FormSubmitAction implements ActionInterface
             $this->fileHandler->convertFile($files['pdf']);
 
             return $response->withRedirect($this->router->pathFor('list'));
+        } catch (FileAlreadyProcessedException $e) {
+            return $response->withRedirect($this->router->pathFor('entry', ['id' => $e->getFileEntity()->getId()]));
         } catch (\Exception $e) {
-            return $response->write('An error occurred while processing your request :<');
+            return $response->write(
+                sprintf('An error occurred while processing your request :< (%s)',
+                    $e->getMessage()
+                )
+            );
         }
     }
 }
