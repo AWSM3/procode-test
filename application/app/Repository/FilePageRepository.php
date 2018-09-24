@@ -80,6 +80,9 @@ class FilePageRepository extends Repository implements Interfaces\FilePageReposi
             ),
             [$file]
         );
+        if (!$items) {
+            throw new Exception\ItemNotFoundException;
+        }
 
         return $this->hydrateMany($items);
     }

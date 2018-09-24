@@ -104,6 +104,9 @@ abstract class Repository implements RepositoryInterface
                 sprintf('SELECT %s FROM %s WHERE %s = :id', $columns, $this->table, $column),
                 ['id' => $id]
             );
+            if (!$item) {
+                throw new Exception\ItemNotFoundException;
+            }
             $hydrated = $this->hydrate($item);
             $this->storeToMemory($id, $hydrated);
 
